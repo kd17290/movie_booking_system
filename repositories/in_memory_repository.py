@@ -14,11 +14,13 @@ class InMemoryRepository(Generic[T], metaclass=Singleton):
         return self._data.get(pk, None)
 
     def save(self, obj: T) -> T:
-        obj.id = self.counter
-        self._data[obj.id] = obj
+        setattr(obj, "id", self.counter)
+        id = getattr(obj, "id")
+        self._data[id] = obj
         self.counter += 1
         return obj
 
     def update(self, obj: T) -> T:
-        self._data[obj.id] = obj
+        id = getattr(obj, "id")
+        self._data[id] = obj
         return obj

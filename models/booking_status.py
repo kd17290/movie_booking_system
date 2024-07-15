@@ -1,7 +1,7 @@
-from models.base_model import BaseModel
+from enum import Enum
 
 
-class BookingStatus(BaseModel):
+class BookingStatus(Enum):
     CONFIRMED = "CONFIRMED"
     PENDING = "PENDING"
     CANCELLED = "CANCELLED"

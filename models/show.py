@@ -29,4 +29,5 @@ class Show(BaseModel):
         self.end_time = end_time
         self.seats = {}
         for seat in seats:
+            assert seat.id
             self.seats[seat.id] = seat

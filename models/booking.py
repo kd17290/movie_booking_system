@@ -10,7 +10,7 @@ class Booking(BaseModel):
     user: User
     show: Show
     seats: list[Seat]
-    total_price: float | None = None
+    total_price: float
     booking_status: BookingStatus
     payment: Payment | None = None
 
@@ -20,7 +20,7 @@ class Booking(BaseModel):
         show: Show,
         seats: list[Seat],
         total_price: float,
-        booking_status: BookingStatus = BookingStatus.PENDING,
+        booking_status: BookingStatus,
         id: int | None = None,
     ):
         super().__init__(id)

@@ -51,9 +51,11 @@ class TicketBookingService:
             show=show,
             seats=selected_seats,
             total_price=total_price,
+            booking_status=BookingStatus.PENDING,
         )
         booking = self.booking_repository.save(booking)
         print(f"Attempting payment for {booking.show.id}")
+        assert booking.id
         payment: Payment = self.payment_gateway.make_payment(
             booking_id=booking.id, amount=booking.total_price, currency="INR"
         )
@@ -62,6 +64,7 @@ class TicketBookingService:
         if payment.payment_status == PaymentStatus.SUCCESS:
             print(f"Payment successful")
             for seat in selected_seats:
+                assert seat.id
                 seat.seat_status = SeatStatus.BOOKED
                 show.seats[seat.id] = seat
             self.show_repository.update(show)
